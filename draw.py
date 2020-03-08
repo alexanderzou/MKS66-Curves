@@ -14,7 +14,39 @@ def add_circle( points, cx, cy, cz, r, step ):
         t += step
 
 def add_curve( points, x0, y0, x1, y1, x2, y2, x3, y3, step, curve_type ):
-    pass
+    if curve_type == 'bezier':
+        ax = (-1*x0)+(3*x1)-(3*x2)+x3
+        bx = (3*x0)-(6*x1)+(3*x2)
+        cx = (-3*x0)+(3*x1)
+        dx = x0
+        ay = (-1*y0)+(3*y1)-(3*y2)+y3
+        by = (3*y0)-(6*y1)+(3*y2)
+        cy = (-3*y0)+(3*y1)
+        dy = y0
+    else:
+        ax = 0
+        bx = 0
+        cx = 0
+        dx = 0
+        ay = 0
+        by = 0
+        cy = 0
+        dy = 0
+    t = 0
+    while t < 1:
+        if curve_type == 'bezier':
+            xThis = (ax*t*t*t)+(bx*t*t)+(cx*t)+dx
+            yThis = (ay*t*t*t)+(by*t*t)+(cy*t)+dy
+            xNext = (ax*(t+step)*(t+step)*(t+step))+(bx*(t+step)*(t+step))+(cx*(t+step))+dx
+            yNext = (ay*(t+step)*(t+step)*(t+step))+(by*(t+step)*(t+step))+(cy*(t+step))+dy
+        else:
+            xThis = 0
+            yThis = 0
+            xNext = 0
+            yNext = 0
+            pass
+        add_edge(points, xThis, yThis, 0, xNext, yNext, 0)
+        t += step
 
 
 def draw_lines( matrix, screen, color ):
